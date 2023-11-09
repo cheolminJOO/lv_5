@@ -10,7 +10,7 @@ export default function Home() {
   }
 
   const onClickLogoutBtn = () => {
-    removeCookie("token222")
+    removeCookie("token")
     navigate('/')
   }
 
