@@ -5,8 +5,6 @@ import { useMutation, useQueryClient } from 'react-query';
 import { checkLogin } from '../api/todos';
 import {Portal} from 'react-portal'
 import Modal from '../shared/Modal';
-import Modal2 from '../shared/Modal2';
-import { Cookies } from 'react-cookie';
 import { getCookie, setCookie } from '../shared/Cookie';
 import Auth from '../shared/Auth';
 

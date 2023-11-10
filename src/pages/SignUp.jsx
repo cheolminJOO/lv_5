@@ -3,10 +3,8 @@ import * as S from '../shared/LoginStyle'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from "react-query"
 import { addNewUser } from '../api/todos'
-import Modal2 from '../shared/Modal2'
 import { Portal } from 'react-portal'
 import Modal from '../shared/Modal'
-import { getCookie } from '../shared/Cookie'
 import Auth from '../shared/Auth'
 
 

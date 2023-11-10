@@ -5,13 +5,17 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { CookiesProvider } from 'react-cookie';
+import { Provider } from 'react-redux'
+import { store } from './redux/config/configStore';
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <CookiesProvider>
-        <QueryClientProvider client={queryClient}>
-            <App />
-        </QueryClientProvider>
+        <Provider store = {store}>
+            <QueryClientProvider client={queryClient}>
+                <App />
+            </QueryClientProvider>
+        </Provider>
     </CookiesProvider>
 
 );
