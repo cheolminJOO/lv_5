@@ -1,15 +1,31 @@
 import React, { useState } from 'react'
 import * as S from '../shared/LoginStyle'
 import { useNavigate } from 'react-router-dom'
+import { useMutation, useQueryClient } from 'react-query';
 import { checkLogin } from '../api/todos';
 import {Portal} from 'react-portal'
 import Modal from '../shared/Modal';
-import {setCookie } from '../shared/Cookie';
+import { getCookie, setCookie } from '../shared/Cookie';
 import Auth from '../shared/Auth';
 
 
 export default function Login() {
-  const [token,setToken] = useState('')
+
+  const queryClient = useQueryClient();
+  const mutation = useMutation(checkLogin, {
+    onSuccess : () => {
+      queryClient.invalidateQueries("user")
+    },
+    onError : () => {
+
+    },
+  })
+
+  console.log(mutation)
+  
+
+
+  // console.log("뮤테이션",mutation)
   const [id,setId] = useState('')
   const [password,setPassword] = useState('')
   const [isOpenFirstModal, setIsOpenFirstModal] = useState(false);
@@ -27,7 +43,7 @@ export default function Login() {
   const onClickSignUp = () => {
     navigate('/signup')
   }
-//login
+
   const onClickLoginBtn = async() => {
     if(!id && !password) {
       return alert("아이디와 비밀번호를 입력하세요")
@@ -38,14 +54,27 @@ export default function Login() {
     }
 
     const response =await checkLogin(checkIdAndPW)
-    setToken(response)
+
+    mutation.mutate(checkIdAndPW) 
     setIsOpenFirstModal((prev) => !prev)
+
+    //배치형이라 이 함수가 끝나고 mutation.data에 값이 들어간다. 지금은 값이 없는 상태,
+    //그래서 두 번 눌렀을 때 진행이 되는 것
   }
 
+  const token = mutation.data // 여기에 토큰있음.
+  console.log("token",token)
+
+  const tokenCheck = getCookie("token") // 토큰이 있다면 글자가 있고 없으면 undefined
+  console.log("tokenCheck",tokenCheck)
+  
   const onClickCloseModal = () => {
     setIsOpenFirstModal((prev) => !prev)
   }
 
+  // const handleSubmit = async () => {
+  //   const resp
+  // }
 
   if(token) { // 토큰이 쿠키에 담김.ㄷㄷㄷㄷ
     const time = 3600; //1시간
@@ -64,13 +93,14 @@ export default function Login() {
     }, time * 1000)
   }
 
-
+  console.log('mutation',mutation)
 
   return (
     <S.Wrapper>
       <Auth/>
+
       <S.BoxWrapper>
-        {token && (
+        {token !==undefined && (
         <Portal node = {document && document.getElementById('modal-root')}>
           <Modal token ={token} onClickCloseModal={onClickCloseModal}/>
         </Portal>

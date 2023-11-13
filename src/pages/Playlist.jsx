@@ -5,6 +5,7 @@ import { addNumber } from '../redux/modules/Id';
 import {v4 as uuidv4} from 'uuid';
 import * as S from '../shared/Playlist'
 import { addImage } from '../redux/modules/Image';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function Playlist() {
   const [songName,setSongName] = useState('')
@@ -15,8 +16,12 @@ export default function Playlist() {
   const imageArr = useSelector((state) => state.songImage.imageArr)
   const [isActive, setIsActive] = useState(false)
   const ref = useRef(null)
+  const [desc,setDesc] = useState('')
+  const navigate = useNavigate();
 
   console.log("imageArr",imageArr[0])
+
+  
 
 
 
@@ -47,6 +52,7 @@ export default function Playlist() {
       id : id.id,
       songName,
       singer,
+      desc,
     }
     dispatch(addNumber()) // 이거 안 하면 숫자 증가 안함 !
     dispatch(addSong(newSong))
@@ -72,11 +78,18 @@ export default function Playlist() {
     ref.current.click()
   }
 
+  const onChangeTextarea = (event) => {
+    setDesc(event.target.value)
+  }
+
+  const onClickMoreInfo = (id) => () => {
+    navigate(`/mylist/${id}`)
+  }
+
 
   return (
     <S.WrapperOfWrapper>
-      <S.BodyWrapper>
-        <div>
+      <S.BodyWrapper>    
           <S.InputWrapper>
             <div>
             <p>singer</p>
@@ -94,15 +107,18 @@ export default function Playlist() {
             <div>
               <div>Image Preview</div>
               {isActive && (
-                <img src={imageArr[id.id]} alt='액박'/>
+                <S.ImagePreviewStyle src={imageArr[id.id]} alt='액박'/>
               )}
               {!isActive && (
-                <div></div>
+                <S.ImagePreviewBox></S.ImagePreviewBox>
               )}
+            </div>
+            <div>
+              <div>Description</div>
+            <S.DescriptionStyle onChange={onChangeTextarea}  ></S.DescriptionStyle>
             </div>
             <button onClick={onClickSubmitSongBtn}>등록하기</button>
           </S.InputWrapper>
-        </div>
         <div>
           <div>my playlist</div>
             <S.SongWrapper>
@@ -112,7 +128,10 @@ export default function Playlist() {
                 <S.ImageStyle src={imageArr[song.id]} alt='엑박'/>
                 <label>SONG NAME</label><S.SongNameStyle key={uuidv4()}>{song.songName}</S.SongNameStyle>
                 <label>SINGER</label><div key={uuidv4()}>{song.singer}</div>
-                <button onClick={onClickDeleteBtn(song.id)}>삭제하기</button>
+                <S.ButtonStyleWrapper>
+                  <button onClick={onClickDeleteBtn(song.id)}>삭제하기</button>
+                  <button onClick={onClickMoreInfo(song.id)}>더보기</button>
+                </S.ButtonStyleWrapper>
               </S.SongCard>
               )}
             </S.SongWrapper>

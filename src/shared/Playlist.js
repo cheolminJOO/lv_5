@@ -28,7 +28,7 @@ export const SongCard= styled.div`
   align-items: center;
 `
 export const SongWrapper = styled.div`
-  width: 400px;
+  width: 800px;
   height: 680px;
   display: flex;
   flex-direction: column;
@@ -71,7 +71,28 @@ export const ImageUploadBtn = styled.button`
 
 `
 
+export const ImagePreviewBox = styled.div`
+  width: 250px;
+  height: 250px;
+  border: 2px solid black;
+  border-radius: 20px;
+`
 
+export const ImagePreviewStyle = styled.img`
+  width: 250px;
+  height: 250px;
+  border-radius: 20px;
+  border: 2px solid black;
+`
 
+export const DescriptionStyle = styled.textarea`
+
+  width: 250px;
+  height: 50px;
+`
+
+export const ButtonStyleWrapper = styled.div`
+  display: flex;
+`
 
 
