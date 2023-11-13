@@ -53,6 +53,7 @@ export const InputStyle = styled.input`
   width: 200px;
   height: 50px;
   border-radius: 20px;
+  margin-bottom: 10px;
 `
 
 export const HiddenInputStyle = styled.input`
@@ -62,6 +63,8 @@ export const HiddenInputStyle = styled.input`
 export const InputWrapper = styled.div`
   width: 100%;
   height: 100%;
+  border-right: 3px solid black;
+  margin: 0px 10px;
 `
 
 export const ImageUploadBtn = styled.button`
@@ -76,6 +79,7 @@ export const ImagePreviewBox = styled.div`
   height: 250px;
   border: 2px solid black;
   border-radius: 20px;
+  margin-bottom: 10px;
 `
 
 export const ImagePreviewStyle = styled.img`
@@ -95,4 +99,18 @@ export const ButtonStyleWrapper = styled.div`
   display: flex;
 `
 
+export const ErrorMessageStyle = styled.div`
+  color: red;
+  font-weight: 500;
+`
+
+export const FormStyle = styled.form`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+`
 

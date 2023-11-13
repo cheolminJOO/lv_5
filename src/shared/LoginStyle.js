@@ -30,6 +30,7 @@ export const InputContentsWrapper = styled.div`
   display: flex;
   margin-top: 20px;
   justify-content: space-between;
+  flex-direction: column;
   
 
 `
@@ -37,7 +38,6 @@ export const InputContentsWrapper = styled.div`
 export const InputStyle = styled.input`
   width: 200px;
   height: 50px;
-  margin-left: 20px;
   
 `
 
@@ -46,6 +46,10 @@ export const LabelStyle = styled.label`
   text-align: center;
   line-height: 50px;
   
+`
+export const ErrorMessageStyle = styled.div`
+  color: red;
+  font-weight: 500;
 `
 
 

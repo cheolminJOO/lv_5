@@ -19,7 +19,7 @@ export const addNewUser = async(newUser) => {
   try{
   const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`,newUser)
   
-  console.log("response",response)
+  // console.log("response",response)
   return response.data;
   
   }catch(error){
@@ -33,8 +33,6 @@ export const addNewUser = async(newUser) => {
       }
     }
   }
-
-console.log("addNewUse", addNewUser)
 
 export const checkLogin = async(toCheckId) => {
     try{
@@ -54,7 +52,8 @@ export const checkLogin = async(toCheckId) => {
       }
     }
   }
-}
 
-console.log("checkLogin", checkLogin())
+
+  
+}
 

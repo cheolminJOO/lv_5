@@ -6,13 +6,17 @@ import { addNewUser } from '../api/todos'
 import { Portal } from 'react-portal'
 import Modal from '../shared/Modal'
 import Auth from '../shared/Auth'
+import {useForm} from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { schema } from '../shared/Schema'
 
 
 export default function SignUp() {
-
-  const [id,setId] = useState('');
-  const [password,setPassword] = useState('')
-  const [isOpenFirstModal, setIsOpenFirstModal] = useState(false);
+  const {register, handleSubmit, formState,reset} = useForm({
+    mode: "onChange",
+    resolver: yupResolver(schema)
+  })
+  const [IsOpenFirstModal,setIsOpenFirstModal] = useState(false);
   const queryClient = useQueryClient();
   const mutation = useMutation(addNewUser, {
     onSuccess : () => {
@@ -28,26 +32,15 @@ export default function SignUp() {
   const onClickBackBtn = () => {
     navigate('/')
   }
-  const onClickSubmitBtn = () => {
-    if(!id && !password) {
-      return alert("아이디와 패스워드를 입력하세요")
-    }
-
+  const onClickSubmitBtn = (data) => {
     const newUser = {
-      id,
-      password,
+      id : data.id,
+      password : data.password
     }
     mutation.mutate(newUser)
     setIsOpenFirstModal((prev) => !prev)
-   
-  }
 
-  const onChangeId = (event) => {
-    setId(event.target.value)
-  }
-
-  const onChangePW = (event) => {
-    setPassword(event.target.value)
+    reset();
   }
 
   const onClickCloseModal = () => {
@@ -62,28 +55,30 @@ export default function SignUp() {
       <Auth/>
       
       <S.BoxWrapper>
-         {mutation.data !==undefined && (
-          <Portal node = {document && document.getElementById('modal-root')}>
-            <Modal text ={text} onClickCloseModal={onClickCloseModal}/>
-          </Portal>
-        )} 
-        <div>
-          <h1>Todo Diary</h1>       
-        </div>
-        <S.InputWrapper>
-          <S.InputContentsWrapper>
-            <S.LabelStyle>아이디 :</S.LabelStyle>
-            <S.InputStyle value={id} onChange={onChangeId} type='text'/>
-          </S.InputContentsWrapper>
-          <S.InputContentsWrapper>
-            <S.LabelStyle>비밀번호 :</S.LabelStyle>
-            <S.InputStyle value={password} onChange={onChangePW} type='password'/>
-          </S.InputContentsWrapper>
-        </S.InputWrapper>
-        <S.ButtonWrapper>
-          <button onClick={onClickBackBtn}> 돌아가기</button>
-          <button onClick={onClickSubmitBtn}>등록하기</button>
-        </S.ButtonWrapper>
+        <form onSubmit={handleSubmit(onClickSubmitBtn)}>
+          {mutation.data !==undefined && (
+            <Portal node = {document && document.getElementById('modal-root')}>
+              <Modal text ={text} onClickCloseModal={onClickCloseModal}/>
+            </Portal>
+          )} 
+          <div>
+            <h1>Todo Diary</h1>       
+          </div>
+          <S.InputWrapper>
+            <S.InputContentsWrapper>
+              <S.InputStyle  placeholder='Id를 입력하세요' type='text' {...register("id")}/>
+              <S.ErrorMessageStyle>{formState.errors.id?.message}</S.ErrorMessageStyle>
+            </S.InputContentsWrapper>
+            <S.InputContentsWrapper>
+              <S.InputStyle placeholder='비밀번호를 입력하세요'  type='password' {...register("password")}/>
+              <S.ErrorMessageStyle>{formState.errors.password?.message}</S.ErrorMessageStyle>
+            </S.InputContentsWrapper>
+          </S.InputWrapper>
+          <S.ButtonWrapper>
+            <button type="button" onClick={onClickBackBtn}> 돌아가기</button>
+            <button style={{backgroundColor : formState.isValid ? "black" : "" , color : formState.isValid? "white" : ""}} type="submit">등록하기</button>
+          </S.ButtonWrapper>
+        </form>
       </S.BoxWrapper>
     </S.Wrapper>
     

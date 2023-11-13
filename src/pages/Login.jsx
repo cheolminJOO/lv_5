@@ -1,51 +1,64 @@
 import React, { useState } from 'react'
 import * as S from '../shared/LoginStyle'
 import { useNavigate } from 'react-router-dom'
+import { useMutation, useQueryClient } from 'react-query';
 import { checkLogin } from '../api/todos';
 import {Portal} from 'react-portal'
 import Modal from '../shared/Modal';
-import {setCookie } from '../shared/Cookie';
+import { getCookie, setCookie } from '../shared/Cookie';
 import Auth from '../shared/Auth';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../shared/Schema';
 
 
 export default function Login() {
-  const [token,setToken] = useState('')
-  const [id,setId] = useState('')
-  const [password,setPassword] = useState('')
-  const [isOpenFirstModal, setIsOpenFirstModal] = useState(false);
+  const {register,handleSubmit,reset,formState} = useForm({
+    mode : "onChange",
+    resolver : yupResolver(schema)
+  })
+  const queryClient = useQueryClient();
+  const mutation = useMutation(checkLogin, {
+    onSuccess : () => {
+      queryClient.invalidateQueries("user")
+    }
+  })
 
-  const onChangeId = (event) => {
-    setId(event.target.value)
-  }
+  console.log("뮤테이션",mutation)
+  const [IsOpenFirstModal,setIsOpenFirstModal] = useState(false);
 
-  const onChangePW = (event) => {
-    setPassword(event.target.value)
-  }
 
   const navigate = useNavigate();
 
   const onClickSignUp = () => {
     navigate('/signup')
   }
-//login
-  const onClickLoginBtn = async() => {
-    if(!id && !password) {
-      return alert("아이디와 비밀번호를 입력하세요")
-    }
-    const checkIdAndPW = {
-      id,
-      password,
-    }
 
-    const response =await checkLogin(checkIdAndPW)
-    setToken(response)
+  const onClickLoginBtn = (data) => {
+    const checkIdAndPW = {
+      id : data.id,
+      password : data.password
+    }
+    mutation.mutate(checkIdAndPW) 
     setIsOpenFirstModal((prev) => !prev)
+    localStorage.setItem("token", mutation.data)
+
+    //배치형이라 이 함수가 끝나고 mutation.data에 값이 들어간다. 지금은 값이 없는 상태,
+    //그래서 두 번 눌렀을 때 진행이 되는 것
   }
 
+  const token = mutation.data // 여기에 토큰있음.
+
+  const tokenCheck = getCookie("token") // 토큰이 있다면 글자가 있고 없으면 undefined
+  console.log("tokenCheck",tokenCheck)
+  
   const onClickCloseModal = () => {
     setIsOpenFirstModal((prev) => !prev)
   }
 
+  // const handleSubmit = async () => {
+  //   const resp
+  // }
 
   if(token) { // 토큰이 쿠키에 담김.ㄷㄷㄷㄷ
     const time = 3600; //1시간
@@ -70,28 +83,30 @@ export default function Login() {
     <S.Wrapper>
       <Auth/>
       <S.BoxWrapper>
-        {token && (
-        <Portal node = {document && document.getElementById('modal-root')}>
-          <Modal token ={token} onClickCloseModal={onClickCloseModal}/>
-        </Portal>
-       )} 
-        <div>
-          <h1>Todo Diary</h1>
-        </div>
-        <S.InputWrapper>
-          <S.InputContentsWrapper>
-            <S.LabelStyle>아이디 :</S.LabelStyle>
-            <S.InputStyle type='text' value={id} onChange={onChangeId}/>
-          </S.InputContentsWrapper>
-          <S.InputContentsWrapper>
-            <S.LabelStyle>비밀번호 :</S.LabelStyle>
-            <S.InputStyle type='password' value={password} onChange={onChangePW}/>
-          </S.InputContentsWrapper>
-        </S.InputWrapper>
-        <S.ButtonWrapper>
-          <button onClick={onClickLoginBtn} >로그인</button>
-          <button onClick={onClickSignUp}>회원가입</button>
-        </S.ButtonWrapper>
+        <form onSubmit={handleSubmit(onClickLoginBtn)}>
+          {mutation.data !==undefined && (
+          <Portal node = {document && document.getElementById('modal-root')}>
+            <Modal token ={token} onClickCloseModal={onClickCloseModal}/>
+          </Portal>
+        )} 
+          <div>
+            <h1>Todo Diary</h1>
+          </div>
+          <S.InputWrapper>
+            <S.InputContentsWrapper>
+              <S.InputStyle placeholder='ID를 입력하세요' type='text' {...register("id")}/>
+              <div style={{color : "red"}}>{formState.errors.id?.message}</div>
+            </S.InputContentsWrapper>
+            <S.InputContentsWrapper>
+              <S.InputStyle placeholder='비밀번호를 입력하세요' type='password' {...register("password")}/>
+              <div style={{color : "red"}}>{formState.errors.password?.message}</div>
+            </S.InputContentsWrapper>
+          </S.InputWrapper>
+          <S.ButtonWrapper>
+          <button style={{backgroundColor : formState.isValid ? "black" : "" , color : formState.isValid? "white" : ""}} type="submit">로그인</button>
+            <button type="button" onClick={onClickSignUp}>회원가입</button>
+          </S.ButtonWrapper>
+        </form>
       </S.BoxWrapper>
     </S.Wrapper>
   )
