@@ -37,13 +37,7 @@ export const CommentWrapper = styled.div`
 `
 
 export const InputWidth = styled.div`
-  width: 200px;
-  height: 50px;
-  border: 2px solid black;
-  border-radius: 20px;
-  margin: 5px 10px;
-  text-align: center;
-  line-height: 50px;
+  
 
 `
 
@@ -86,4 +80,23 @@ width: 900px;
 
 export const MakeCommentBox = styled.div`
   margin-bottom: 10px;
+`
+
+export const PictureSize = styled.img`
+  width: 300px;
+  height: 300px;
+  border-radius: 20px;
+  margin-right: 10px;
+`
+
+
+export const InputResult = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+  height: 50px;
+  border: 2px solid black;
+  border-radius: 20px;
+  margin: 5px 10px;
+  line-height: 50px;
 `

@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import {  useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom';
-import { getUserInfo } from '../api/todos';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { AddComment, deleteComment, editComment, getComment } from '../api/PlaylistCrud';
 import * as S from '../shared/Style/MylistStyle'
 import { Button } from '../component/Button';
+import { getDate } from '../utills/Date';
+import { date } from 'yup';
 
 
 
@@ -33,7 +34,6 @@ export default function MyList() {
 
   const songArr = useSelector((state) => state.song.songArr)
   const imageArr = useSelector((state) => state.songImage.imageArr)
-  const id = useSelector((state) => state.id)
   const [comment, setComment] = useState('')
   const params = useParams()
   const [editContent, setEditContent] = useState('')
@@ -42,6 +42,7 @@ export default function MyList() {
 
   const detailedInfo = songArr.find((song) => song.id === parseInt(params.id))
   const onChangeComment = (event) => {
+
     setComment(event.target.value)
   
   }
@@ -93,7 +94,7 @@ export default function MyList() {
       <S.Wrapper>
         <S.InfoWrapper>
           <h2>Music Information</h2>
-          <img src={imageArr[params.id]} alt='엑박'/>
+          <S.PictureSize src={imageArr[params.id]} alt='엑박'/>
           노래제목 : {detailedInfo.songName}<br/>
           가수 : {detailedInfo.singer}<br/>
           느낀점 : {detailedInfo.desc}
@@ -102,12 +103,19 @@ export default function MyList() {
         <S.WrapperComment>
           <S.MakeCommentBox>
           <label>댓글</label>
-          <S.InputStyle value={comment} type='text' onChange={onChangeComment} />
+          <S.InputStyle maxLength={8} value={comment} type='text' onChange={onChangeComment} />
           <Button backgroundColor = "rgb(0, 169, 255)" hoverColor = "rgb(205, 245, 253)" onClick={onClickComment}>댓글달기</Button>
           </S.MakeCommentBox>
           {res?.map((comment) => 
         <S.CommentWrapper> 
-          <S.InputWidth>{comment.comment}</S.InputWidth>
+          <S.InputResult>
+            <div>
+            <S.InputWidth>{comment.comment}</S.InputWidth>
+            </div>
+            <div>
+              {getDate()}
+            </div>
+          </S.InputResult>
           <Button onClick={onClickDeleteComment(comment.id,"안녕")}>삭제하기</Button>
           <Button backgroundColor = "rgb(224, 244, 255)" hoverColor = "rgb(135, 196, 255)" onClick={onClickisEdit(comment.id)}>수정하기</Button>
           {editingCommentId === comment.id && (
