@@ -41,11 +41,14 @@ export default function MyList() {
   const [isEdit, setIsEdit] = useState(false)
 
   const detailedInfo = songArr.find((song) => song.id === parseInt(params.id))
-
   const onChangeComment = (event) => {
     setComment(event.target.value)
   
   }
+
+
+  console.log("안녕")
+  console.log("params")
 
   const onClickComment = () => {
     if(!comment) return alert("아무것도 입력이 안 됐습니다. 다시 확인해주세요")
@@ -90,7 +93,7 @@ export default function MyList() {
       <S.Wrapper>
         <S.InfoWrapper>
           <h2>Music Information</h2>
-        <img src={imageArr[id.id -1]} alt='엑박'/>
+          <img src={imageArr[params.id]} alt='엑박'/>
           노래제목 : {detailedInfo.songName}<br/>
           가수 : {detailedInfo.singer}<br/>
           느낀점 : {detailedInfo.desc}

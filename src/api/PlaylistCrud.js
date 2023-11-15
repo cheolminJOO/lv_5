@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export const AddComment = async(newComment) => {
   try{
-  const response = await axios.post(`${process.env.REACT_APP_JSON_SERVER_URL}/comments`,newComment)
+  const response = await axios.post(`${process.env.REACT_APP_SONGS}/comments`,newComment)
   return response.data
 
   }catch(error){
@@ -17,7 +17,7 @@ export const AddComment = async(newComment) => {
 
 export const getComment = async() => {
   try{
-    const response = await axios.get(`${process.env.REACT_APP_JSON_SERVER_URL}/comments`)
+    const response = await axios.get(`${process.env.REACT_APP_SONGS}/comments`)
     return response.data
   }catch(error) {
     if(error.response){
@@ -29,7 +29,7 @@ export const getComment = async() => {
 
 export const deleteComment = async(targetId) => {
   try{
-    const response = await axios.delete(`${process.env.REACT_APP_JSON_SERVER_URL}/comments/${targetId}`)
+    const response = await axios.delete(`${process.env.REACT_APP_SONGS}/comments/${targetId}`)
     return response.data
     
   }catch(error) {
@@ -42,7 +42,7 @@ export const deleteComment = async(targetId) => {
 export const editComment = async(target) =>  {
 
   try{
-    const response = await axios.patch(`${process.env.REACT_APP_JSON_SERVER_URL}/comments/${target.id}`, {
+    const response = await axios.patch(`${process.env.REACT_APP_SONGS}/comments/${target.id}`, {
       comment : target.editContent  })
     return response.data
     

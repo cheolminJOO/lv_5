@@ -42,7 +42,6 @@ export default function Login() {
     }
     mutation.mutate(checkIdAndPW) 
     setIsOpenFirstModal((prev) => !prev)
-    localStorage.setItem("token", mutation.data)
 
     //배치형이라 이 함수가 끝나고 mutation.data에 값이 들어간다. 지금은 값이 없는 상태,
     //그래서 두 번 눌렀을 때 진행이 되는 것
