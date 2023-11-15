@@ -9,6 +9,10 @@ export const Wrapper = styled.div `
 
 `
 
+export const H1Style = styled.h1`
+  text-align: center;
+`
+
 export const BoxWrapper = styled.div`
   display: flex;
   flex-direction: column;

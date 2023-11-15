@@ -1,9 +1,9 @@
 import React from 'react';
-import '../shared/FirstModal.css';
+import '../Style/FirstModal.css';
 import { useNavigate } from 'react-router-dom';
 
 
-const Modal2 = ({ onClickCloseModal }) => {
+const Modal2 = () => {
   const navigate = useNavigate();
 
   const onClickOkayBtn = () => {

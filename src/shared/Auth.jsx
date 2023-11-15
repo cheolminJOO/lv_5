@@ -1,6 +1,6 @@
 import React from 'react'
 import { getCookie } from './Cookie'
-import Modal2 from './Modal2'
+import Modal2 from './Modal/Modal2'
 import { Portal } from 'react-portal'
 
 export default function Auth() {

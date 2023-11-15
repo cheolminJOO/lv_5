@@ -1,7 +1,8 @@
 import React from 'react';
-import '../shared/FirstModal.css';
+import '../Style/FirstModal.css';
 import { useNavigate } from 'react-router-dom';
-import {useCookies} from 'react-cookie'
+import * as S from '../Style/Modal'
+import { Button } from '../../component/Button';
 
 
 const Modal = ({ onClickCloseModal,token,text }) => {
@@ -23,19 +24,20 @@ const Modal = ({ onClickCloseModal,token,text }) => {
     <div className="modal">
       <div className="modal-content">
         {text && (
-        <>
-        <h2>회원가입에 성공했습니다.</h2>
-        <button color = "white" onClick={MoveToLandingPage}>확인</button>
-        </>
+        <S.MessageWrapper>
+        <h1>회원가입에 성공했습니다.</h1>
+        <h3>환영합니다 </h3>
+        <Button onClick={MoveToLandingPage}>확인</Button>
+        </S.MessageWrapper>
         
         )}
         {!text && (
-          <>
-          <h2>로그인에 성공했습니다.</h2>
-          <button color = "white" onClick={MoveToHomeBtn}>확인</button>
-          </>
+          <S.MessageWrapper>
+          <h1>로그인에 성공했습니다.</h1>
+          <h3>환영합니다 </h3>
+          <Button onClick={MoveToHomeBtn}>확인</Button>
+          </S.MessageWrapper>
         )}
-        <p>환영합니다 </p>
         <div style={{marginLeft:"140px"}}>
 
         </div>

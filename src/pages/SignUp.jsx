@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import * as S from '../shared/LoginStyle'
+import * as S from '../shared/Style/LoginStyle'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient } from "react-query"
 import { addNewUser } from '../api/todos'
 import { Portal } from 'react-portal'
-import Modal from '../shared/Modal'
+import Modal from '../shared/Modal/Modal'
 import Auth from '../shared/Auth'
 import {useForm} from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from '../shared/Schema'
+import { Button } from '../component/Button'
 
 
 export default function SignUp() {
@@ -62,7 +63,7 @@ export default function SignUp() {
             </Portal>
           )} 
           <div>
-            <h1>Todo Diary</h1>       
+            <S.H1Style>Todo Diary</S.H1Style>       
           </div>
           <S.InputWrapper>
             <S.InputContentsWrapper>
@@ -75,8 +76,8 @@ export default function SignUp() {
             </S.InputContentsWrapper>
           </S.InputWrapper>
           <S.ButtonWrapper>
-            <button type="button" onClick={onClickBackBtn}> 돌아가기</button>
-            <button style={{backgroundColor : formState.isValid ? "black" : "" , color : formState.isValid? "white" : ""}} type="submit">등록하기</button>
+            <Button backgroundColor = "rgb(0, 169, 255)" hoverColor = "rgb(137, 207, 243)" type="button" onClick={onClickBackBtn}> 돌아가기</Button>
+            <Button style={{backgroundColor : formState.isValid ? "black" : "" , color : formState.isValid? "white" : ""}} type="submit">등록하기</Button>
           </S.ButtonWrapper>
         </form>
       </S.BoxWrapper>

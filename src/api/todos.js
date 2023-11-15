@@ -41,14 +41,11 @@ export const checkLogin = async(toCheckId) => {
     return response.data.token;
     
   }catch(error){
-    console.log(error) //error
+    console.log(error)
     if(error.response){
       if(error.response.status ===401) {
-        // if(error.response.data.message === '비밀번호가 일치하지 않습니다.'){  // 문자열로 하면 안 좋다,  쉽게 변하지 않는 값으로 validation .
-          alert(error.response.data.message) // 알아서 필터링 돼서 들어온다..
-        // }else if(error.response.data.message === '존재하지 않는 유저입니다.'){ //문자열이 아니라 코드로 비교 . ~~
-        //   alert(error.response.data.message)                                   //특정한 케이스로 예외처리 하고싶은데, 그런 게 없다면 api를 프론트에 맞게 만들어달라. !!
-        // }
+
+          alert(error.response.data.message) 
       }
     }
   }

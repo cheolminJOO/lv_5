@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import * as S from '../shared/HeaderStyle'
+import * as S from '../shared/Style/HeaderStyle'
 import { useNavigate } from 'react-router-dom';
 import { removeCookie } from '../shared/Cookie';
+import { HomeOutlined } from '@ant-design/icons';
+import { Button } from '../component/Button';
 
 export default function Header() {
   const [isActive, setIsActive] = useState(false)
@@ -27,15 +29,15 @@ export default function Header() {
   return (
     <S.Wrapper>
       <S.HeaderWrapper>
-        <S.HeaderImageLogo onClick={onClickLogo} src="picture/1.jpg" alt='강아지'/>       
-        <h1>플레이리스트</h1>
+        <S.HomeOutLined onClick={onClickLogo}/>      
+        <S.TitleStyle>플레이리스트</S.TitleStyle>
         <S.MyProfileStyle>
-          <img onClick={onClickMyProfile} src="picture/avatar.png" alt='마이페이지'/>
+          <S.ProfileImage onClick={onClickMyProfile} src="picture/avatar.png" alt='마이페이지'/>
             {isActive && (
-              <div>
-                <button onClick={onClickMyPageBtn}>마이페이지</button>
-                <button onClick={onClickLogoutBtn}>로그아웃</button>
-              </div>
+              <S.HeaderButtonWrapper>
+                <Button onClick={onClickMyPageBtn}>마이페이지</Button>
+                <Button onClick={onClickLogoutBtn}>로그아웃</Button>
+              </S.HeaderButtonWrapper>
             )}
         </S.MyProfileStyle>
     </S.HeaderWrapper>

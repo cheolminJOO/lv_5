@@ -1,13 +1,14 @@
 import React from 'react'
-import * as S from '../shared/LayoutStyle'
 import Header from './Header'
 import Footer from './Footer'
 
 export default function Layout({children}) {
   return (
-    <div>
+    <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column'}}>
       <Header/>
-            {children}
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {children}
+        </div>
       <Footer/>
     </div>
   )

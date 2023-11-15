@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addSong, deleteSong } from '../redux/modules/Song';
 import { addNumber } from '../redux/modules/Id';
 import {v4 as uuidv4} from 'uuid';
-import * as S from '../shared/Playlist'
+import * as S from '../shared/Style/PlaylistStyle'
 import { addImage } from '../redux/modules/Image';
 import { useNavigate } from 'react-router-dom';
 import {useForm} from "react-hook-form"
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup"
+import { Button } from '../component/Button';
 
 const schema = yup.object({
   songName : yup.string().required("노래제목을 입력하세요").max(10, "10자 이하 노래만 적으세요"),
@@ -98,7 +99,7 @@ export default function Playlist() {
               </div>
               <div>
                 <div>song image url</div>
-                <S.ImageUploadBtn type='button' onClick={onClickImageBtn}>이미지 업로드</S.ImageUploadBtn> 
+                <Button type='button' onClick={onClickImageBtn}>이미지 업로드</Button> 
                 {/* 버튼이란 버튼은 전부 onClickSubmitSongBtn을 실행시키네,, submit은 저기 onSubmit 함수 실행시키고 button은 이 버튼의 함수를 실행시킨다 .  */}
                 <S.HiddenInputStyle ref={ref} onChange={onChangeImage} type='file' />
               </div>
@@ -115,7 +116,7 @@ export default function Playlist() {
               <S.DescriptionStyle placeholder='please writhe description' {...register("desc")}  ></S.DescriptionStyle>
                 <S.ErrorMessageStyle>{formState.errors.desc?.message}</S.ErrorMessageStyle>
               </div>
-              <button style={{backgroundColor : formState.isValid ? "black" : "", color : formState.isValid ? "white" : ""}} type='submit'>등록하기</button>
+              <Button style={{backgroundColor : formState.isValid ? "black" : "", color : formState.isValid ? "white" : ""}} type='submit'>등록하기</Button>
             </S.FormStyle>
           </S.InputWrapper>
         <div>
@@ -126,10 +127,10 @@ export default function Playlist() {
                  <label>{song.id +1}</label>
                 <S.ImageStyle src={imageArr[song.id]} alt='엑박'/>
                 <label>SONG NAME</label><S.SongNameStyle key={uuidv4()}>{song.songName}</S.SongNameStyle>
-                <label>SINGER</label><div key={uuidv4()}>{song.singer}</div>
+                <label>SINGER</label><S.SongNameStyle key={uuidv4()}>{song.singer}</S.SongNameStyle>
                 <S.ButtonStyleWrapper>
-                  <button onClick={onClickDeleteBtn(song.id)}>삭제하기</button>
-                  <button onClick={onClickMoreInfo(song.id)}>더보기</button>
+                  <Button onClick={onClickDeleteBtn(song.id)}>삭제하기</Button>
+                  <Button backgroundColor = "rgb(224, 244, 255)" hoverColor = "rgb(135, 196, 255)" onClick={onClickMoreInfo(song.id)}>더보기</Button>
                 </S.ButtonStyleWrapper>
               </S.SongCard>
               )}

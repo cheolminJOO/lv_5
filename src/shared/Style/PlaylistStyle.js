@@ -15,6 +15,7 @@ export const BodyWrapper = styled.div`
   display: flex;
   width: 80%;
   justify-content: space-between;
+  background-color: rgb(245, 247, 248);
 
 `
 
