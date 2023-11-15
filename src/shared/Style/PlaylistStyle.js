@@ -55,6 +55,10 @@ export const InputStyle = styled.input`
   height: 50px;
   border-radius: 20px;
   margin-bottom: 10px;
+  &:focus {
+    border: 4px solid skyblue;
+  }
+  
 `
 
 export const HiddenInputStyle = styled.input`
@@ -68,12 +72,6 @@ export const InputWrapper = styled.div`
   margin: 0px 10px;
 `
 
-export const ImageUploadBtn = styled.button`
-  width: 100px;
-  height: 50px;
-  border-radius: 20px;
-
-`
 
 export const ImagePreviewBox = styled.div`
   width: 250px;
@@ -94,6 +92,9 @@ export const DescriptionStyle = styled.textarea`
 
   width: 250px;
   height: 50px;
+  &:focus {
+    border: 4px solid skyblue;
+  }
 `
 
 export const ButtonStyleWrapper = styled.div`

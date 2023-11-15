@@ -61,6 +61,9 @@ export const InputStyle = styled.input`
   width: 180px;
   height: 30px;
   margin: 0px 20px;
+    &:focus {
+    border: 4px solid skyblue;
+  }
 `
 
 export const CommentInput = styled.div`
