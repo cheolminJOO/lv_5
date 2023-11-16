@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { schema } from '../shared/Schema';
 import { Button } from '../component/Button';
+import { emailTest, passwordTest } from '../utills/regExp';
 
 
 export default function Login() {
@@ -36,6 +37,9 @@ export default function Login() {
   }
 
   const onClickLoginBtn = (data) => {
+    if( passwordTest(data.password) !== true) return alert("최소 8자,하나의 문자,하나의 숫자, 하나의 특수문자가 비밀번호에 들어가야 합니다.")
+
+    if(emailTest(data.id) !== true) return alert ("이메일 형식이 맞는지 확인하세요")
     const checkIdAndPW = {
       id : data.id,
       password : data.password

@@ -10,6 +10,7 @@ import {useForm} from "react-hook-form"
 import * as yup from 'yup';
 import {yupResolver} from "@hookform/resolvers/yup"
 import { Button } from '../component/Button';
+import { delSpace } from '../utills/regExp';
 
 const schema = yup.object({
   songName : yup.string().required("노래제목을 입력하세요").max(10, "10자 이하 노래만 적으세요"),
@@ -38,7 +39,7 @@ export default function Playlist() {
 
 
   const onClickSubmitSongBtn = (data) => {
-    if(!data.songName || !data.singer || !isActive  ){
+    if(delSpace(data.songName,data.singer,isActive,data.desc) === "" ){
       return alert("모두 입력하신 뒤 등록해주세요")
     }
 

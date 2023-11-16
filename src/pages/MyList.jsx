@@ -6,7 +6,6 @@ import { AddComment, deleteComment, editComment, getComment } from '../api/Playl
 import * as S from '../shared/Style/MylistStyle'
 import { Button } from '../component/Button';
 import { getDate } from '../utills/Date';
-import { date } from 'yup';
 
 
 
