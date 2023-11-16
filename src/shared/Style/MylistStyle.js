@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { FaRegTrashCan } from "react-icons/fa6";
+import { MdCancelPresentation } from "react-icons/md";
+import { FaEdit } from "react-icons/fa";
+import { GiConfirmed } from "react-icons/gi";
 
 export const BigWrapper = styled.div`
 
@@ -37,7 +41,7 @@ export const CommentWrapper = styled.div`
 `
 
 export const InputWidth = styled.div`
-  
+  font-size: 30px;
 
 `
 
@@ -96,10 +100,29 @@ export const PictureSize = styled.img`
 export const InputResult = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 200px;
-  height: 50px;
+  width: 300px;
+  height: 40px;
   border: 2px solid black;
-  border-radius: 20px;
   margin: 5px 10px;
   line-height: 50px;
+  background-color: lemonchiffon;
+`
+export const CancelImage = styled(MdCancelPresentation)`
+  size: 50;
+`
+
+export const UpdateInputWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const UpdateInput = styled.input`
+  width: 200px;
+  height: 30px;
+  border: 2px solid black;
+  line-height: 30px;
+  background-color: white;
+  z-index: 1000;
+
 `

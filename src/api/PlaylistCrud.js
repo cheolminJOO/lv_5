@@ -43,7 +43,7 @@ export const editComment = async(target) =>  {
 
   try{
     const response = await axios.patch(`${process.env.REACT_APP_SONGS}/comments/${target.id}`, {
-      comment : target.editContent  })
+      comment : target.updatedText  })
     return response.data
     
   }catch(error){
